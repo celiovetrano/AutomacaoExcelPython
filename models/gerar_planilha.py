@@ -52,17 +52,17 @@ class GerarPlanilha:
 
                 # Verifica se o dia está dentro do período de recesso
                 if recesso_inicio and recesso_fim and recesso_inicio <= dia <= recesso_fim:
-                    # Preenche a coluna V com "Recesso" para os dias do recesso
+                    # Preenche a coluna "P" com "Recesso" para os dias do recesso
                     if dia_semana in [5, 6]:  # Mantém a configuração atual para finais de semana
-                        ws.cell(row=linha_inicial + dia - 1, column=22, value=dias_semana_completo[dia_semana])  # Coluna V é a coluna 22
+                        ws.cell(row=linha_inicial + dia - 1, column=16, value=dias_semana_completo[dia_semana])  # Coluna V é a coluna 16
                     else:
-                        ws.cell(row=linha_inicial + dia - 1, column=22, value="Recesso")
+                        ws.cell(row=linha_inicial + dia - 1, column=16, value="Recesso")
                 else:
-                    # Preenche a coluna V com o nome do dia da semana por extenso apenas para finais de semana
+                    # Preenche a coluna "P" com o nome do dia da semana por extenso apenas para finais de semana
                     if dia_semana in [5, 6]:
-                        ws.cell(row=linha_inicial + dia - 1, column=22, value=dias_semana_completo[dia_semana])  # Coluna V é a coluna 22
+                        ws.cell(row=linha_inicial + dia - 1, column=16, value=dias_semana_completo[dia_semana])  # Coluna P é a coluna 16
                     else:
-                        ws.cell(row=linha_inicial + dia - 1, column=22, value=None)  # Limpa a coluna V se não for sábado ou domingo
+                        ws.cell(row=linha_inicial + dia - 1, column=16, value=None)  # Limpa a coluna P se não for sábado ou domingo
 
     def editar_aba(self, dre, escola, arquivo_origem, nome_nova_aba, mes, ano, nome_servidor, rf, qpe, inicio_exercicio, horarios_jeif, horarios_regencia, sala_regencia, cargo, diretorio, recesso_inicio=None, recesso_fim=None):
         # Abre o arquivo de origem com opção data_only
@@ -82,17 +82,17 @@ class GerarPlanilha:
         # Faz as edições necessárias na aba ativa
         aba_ativa['A3'] = f"DIRETORIA REGIONAL DE EDUCAÇÃO DE {dre}".upper()
         aba_ativa['A4'] = escola.upper()
-        aba_ativa['L8'] = f"  SEDE: {escola}".upper()
+        aba_ativa['K8'] = f"  SEDE: {escola}".upper()
         aba_ativa['A5'] = nome_servidor  # Nome do servidor
         aba_ativa['A6'] = cargo  # Cargo do servidor
-        aba_ativa['E7'] = rf  # RF
-        aba_ativa['F7'] = f"QPE: {qpe}"  # QPE
-        aba_ativa['J7'] = f"INÍCIO DO EXERCÍCIO: {inicio_exercicio}"  # Início do exercício
+        aba_ativa['D7'] = rf  # RF
+        aba_ativa['E7'] = f"QPE: {qpe}"  # QPE
+        aba_ativa['I7'] = f"INÍCIO DO EXERCÍCIO: {inicio_exercicio}"  # Início do exercício
         aba_ativa['A11'] = sala_regencia  # Sala de regência
 
         # Horários JEIF e regência por dia da semana
-        colunas_jeif = ['C10', 'H10', 'M10', 'R10', 'W10']
-        colunas_regencia = ['C11', 'H11', 'M11', 'R11', 'W11']
+        colunas_jeif = ['C10', 'E10', 'I10', 'N10', 'T10']
+        colunas_regencia = ['C11', 'E11', 'I11', 'N11', 'T11']
         dias_semana = ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira"]
 
         for i, dia in enumerate(dias_semana):
