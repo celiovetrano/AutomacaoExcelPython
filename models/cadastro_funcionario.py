@@ -44,6 +44,35 @@ class CadastroFuncionario:
 
     # Função para obter horários diários
     def obter_horarios_diarios(self, tipo):
+        if tipo == "JEIF":
+            while True:
+                faz_jeif = input("Deseja cadastrar JEIF para esse profissional? S/N: ").strip().upper()
+                if faz_jeif in ["S", "N"]:
+                    break
+                else:
+                    print("Resposta inválida. Por favor, insira 'S' para Sim ou 'N' para Não.")
+        else:
+            faz_jeif = ""
+        
+        if faz_jeif == "S":
+            return self.preencher_horarios(tipo)
+        elif faz_jeif == "N":
+            return self.preencher_horarios_vazio()
+        else:
+            return self.preencher_horarios(tipo)
+    
+    
+    # Função para preenchimento dos horários vazios
+    def preencher_horarios_vazio(self):        
+        horarios = {}
+        for dia in ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira"]:
+            inicio = "00:00"
+            fim = "00:00"
+            horarios[dia] = f"{inicio} às {fim}"
+        return horarios
+    
+    # Função para preenchimento dos horários diários
+    def preencher_horarios(self, tipo):        
         horarios = {}
         for dia in ["segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira"]:
             while True:
@@ -77,8 +106,21 @@ class CadastroFuncionario:
                     break
                 else:
                     print("Formato de data inválido. Por favor, insira no formato DD/MM/AAAA.")
-            horarios_jeif = self.obter_horarios_diarios("JEIF")
-            horarios_regencia = self.obter_horarios_diarios("regência")
+            
+            while True:
+                horarios_jeif = self.obter_horarios_diarios("JEIF")
+                if horarios_jeif:  # Verifica se o dicionário não está vazio
+                    break
+                else:
+                    print("Horários JEIF não podem ficar vazios.")
+            
+            while True:
+                horarios_regencia = self.obter_horarios_diarios("regência")
+                if horarios_regencia:  # Verifica se o dicionário não está vazio
+                    break
+                else:
+                    print("Horários de regência não podem ficar vazios.")
+            
             serie_regencia = input("Digite a série de regência (formato número e letra, ex.: 3A): ").strip()
             cargo = input("Digite o cargo do funcionário: ").strip()
             
